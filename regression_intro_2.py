@@ -18,8 +18,8 @@ df = df[['Adj. Close', 'HL_Pct', 'PCT_Change', 'Adj. Volume']]
 forecast_col = 'Adj. Close'
 df.fillna(value=-99999, inplace=True)
 forecast_out = int(math.ceil(0.01 * len(df)))
-df['label'] = df[forecast_col].shift(-forecast_out)
 
+df['label'] = df[forecast_col].shift(-forecast_out)
 
 X = np.array(df.drop(['label'], 1))
 X = preprocessing.scale(X)
@@ -35,8 +35,13 @@ clf = LinearRegression(n_jobs=-1)
 clf.fit(X_train, y_train)
 confidence = clf.score(X_test, y_test)
 
-with open('linearregression.pickle', 'wb') as f:
-	pickle.dump(clf, f)
+# Pickle saves the classifier's trained data, so it only needs to be trained once /
+# before making a prediction
+#with open('linearregression.pickle', 'wb') as f:
+#	pickle.dump(clf, f)
+
+#pickle_in = open('linearregression.pickle', 'rb')
+#clf = pickle.load(pickle_in)
 
 forecast_set = clf.predict(X_lately)
 df['Forecast'] = np.nan

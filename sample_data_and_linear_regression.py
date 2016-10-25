@@ -42,7 +42,7 @@ def coefficient_of_determination(ys_orig,ys_line):
 
     return r_squared
 
-xs, ys = create_dataset(40,10,correlation=False)
+xs, ys = create_dataset(40,10,2,correlation=False)
 m, b = best_fit_slope_and_intercept(xs,ys)
 regression_line = [(m*x)+b for x in xs]
 r_squared = coefficient_of_determination(ys,regression_line)
